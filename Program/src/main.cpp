@@ -1,3 +1,10 @@
+/*
+Compilar:
+g++ -std=c++11 -o main src/*.cpp -I include
+
+Ejecutar:
+./main
+*/
 #include "../include/Cifrado.h"
 #include "../include/Enmascarado.h"
 #include "../include/Tokenizado.h"
