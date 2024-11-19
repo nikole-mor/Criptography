@@ -1,0 +1,12 @@
+<ul>
+            <li><a href="#introduccion">Introducción</a></li>
+            <li><a href="#objetivos">Objetivos</a></li>
+            <li><a href="#modulos">Módulos</a></li>
+            <li><a href="#uso">Guía de Uso</a></li>
+            <li><a href="#requisitos">Requisitos del Sistema</a></li>
+            <li><a href="#estructura">Estructura del Proyecto</a></li>
+            <li><a href="#funcionalidades">funcionalidades</a></li>
+            <li><a href="#diseno">Diseño del programa</a></li>
+            <li><a href="#ejemplos">Ejemplos</a></li>
+            <li><a href="#github">GitHub</a></li>
+        </ul>

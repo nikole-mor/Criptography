@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Documentación</h2>
+        <ul>
+          <li>
+              <button class="dropdown-btn">
+                  Introducción 
+                  <span class="arrow">▼</span>
+              </button>
+              <ul class="dropdown-content">
+                  <li><a href="#introduccion">¿Qué es?</a></li>
+                  <li><a href="#objetivos">Objetivos</a></li>
+                  <li><a href="#estructura">Estructura del proyecto</a></li>
+              </ul>
+          </li>
+          <li>
+              <button class="dropdown-btn">
+                  Módulos 
+                  <span class="arrow">▼</span>
+              </button>
+              <ul class="dropdown-content">
+                  <li><a href="#modulo-cifrado">Cifrado</a></li>
+                  <li><a href="#modulo-enmascarado">Enmascarado</a></li>
+                  <li><a href="#modulo-tokenizado">Tokenizado</a></li>
+                  <li><a href="#modulo-truncado">Truncado</a></li>
+              </ul>
+          </li>
+          <li><a href="#uso">Guía de Uso</a></li>
+      </ul>
+      
+    </div>
+    <div class="main-content">
+        <header>
+            <h1>Cifrado y Manipulación de Datos en C++</h1>
+        </header>
+        <section id="introduccion">
+            <div class="imagen">
+                <img src="img/cripto.png" alt="">
+            </div>
+            
+            <h2>Introducción</h2>
+            <p>Este proyecto implementa diversas técnicas de procesamiento y protección de datos para procesar información e forma segura y eficiente mediante técnicas de cifrado, enmascaramiento, tokenización y truncado.</p>
+            <p>El proyecto se desarrolla como una aplicación basada en consola, que permite al usuario interactuar con diferentes métodos de manipulación de datos. Cada funcionalidad está diseñada para abordar un aspecto específico de la seguridad de datos:
+              <ul>
+                <li>Cifrado: Protege la información transformándola en un formato ilegible sin la clave correspondiente.</li>
+                <li>Enmascaramiento: Oculta parte de los datos sensibles para mostrar solo la información necesaria.</li>
+                <li>Tokenización: Convierte datos originales en tokens únicos que no revelan información real.</li>
+                <li>Truncado: Recorta los datos a una longitud específica para fines de almacenamiento o presentación.</p></li>
+              </ul>
+          </section>
+        <section id="objetivos">
+            <h2>Objetivos</h2>
+            <p>El principal objetivo es implementar funciones seguras y prácticas para manejar datos en C++.</p>
+        </section>
+        <section id="estructura">
+            <h2>Estructura del Proyecto</h2>
+            <pre>
+      Proyecto/
+      ├── include/
+      │   ├── Cifrado.h
+      │   ├── Enmascarado.h
+      │   ├── Tokenizado.h
+      │   ├── Truncado.h
+      ├── src/
+      │   ├── cifrado.cpp
+      │   ├── enmascarado.cpp
+      │   ├── tokenizado.cpp
+      │   ├── truncado.cpp
+      │   ├── main.cpp
+      ├── archivo.txt            # Archivo de entrada de ejemplo
+      ├── archivo_cifrado.txt    # Archivo generado como resultado
+      └── README.md              # Documentación del proyecto
+            </pre>
+          </section>
+        <section id="modulo-cifrado">
+            <h2>Cifrado</h2>
+            <p>Convierte datos en un formato seguro mediante un algoritmo de desplazamiento.</p>
+        </section>
+        <section id="uso">
+            <h2>Guía de Uso</h2>
+            <pre><code>
+g++ -std=c++11 -o main src/*.cpp -I include
+./main
+            </code></pre>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
