@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h1>Seguridad de Datos en C++</h1>
+        <h2>Documentación</h2>
+        <ul>
+          <li>
+              <button class="dropdown-btn">
+                  Inicio 
+                  <span class="arrow">▼</span>
+              </button>
+              <ul class="dropdown-content">
+                  <li><a href="#introduccion">Introducción</a></li>
+                  <li><a href="#objetivos">Objetivos</a></li>
+                  <li><a href="#estructura">Estructura del proyecto</a></li>
+              </ul>
+          </li>
+          <li>
+              <button class="dropdown-btn">
+                  Módulos 
+                  <span class="arrow">▼</span>
+              </button>
+              <ul class="dropdown-content">
+                  <li><a href="cifrado.html">Cifrado</a></li>
+                  <li><a href="enmascarado.html">Enmascarado</a></li>
+                  <li><a href="tokenizado.html">Tokenizado</a></li>
+                  <li><a href="truncado.html">Truncado</a></li>
+                  <li><a href="utilidades.html">Utilidades</a></li>
+              </ul>
+          </li>
+          <li><a href="#uso">Guía de Uso</a></li>
+          <li><a href="#referencias">Referencias</a></li>
+      </ul>
+      
+    </div>
+    <div class="main-content">
+        <header>
+            <h1>Soluciones de Seguridad de Datos en C++</h1>
+        </header>
+        <p><a href="index.html"><-- Inicio</a></p>
+
+        <section id="modulo-truncado">
+            <h2>Truncado</h2>
+            <p>Recorta los datos a una longitud específica para fines de almacenamiento o presentación.</p>
+            <h3>Clase Truncado</h3>
+            <pre><code>
+#ifndef TRUNCADO_H
+#define TRUNCADO_H
+
+#include <string>
+using namespace std;
+
+class Truncado { // Clase para truncar
+public:
+string truncarNombre(string nombre, int n); // Trunca un nombre hasta n caracteres
+string truncarCorreo(string correo, int n); // Trunca un correo hasta n caracteres
+string truncarTarjeta(string tarjeta, int n); // Trunca una tarjeta hasta n caracteres
+string truncarMensaje(string mensaje, int n); // Trunca un mensaje hasta n caracteres
+void truncarArchivo(const string &inputFileName, const string &outputFileName, int n); // Trunca el contenido de un archivo hasta n caracteres
+};
+
+#endif
+            </code></pre>
+
+            <h3>Ejemplos de Uso</h3>
+            <h4>Truncar Nombre</h4>
+            <pre><code>
+string Truncado::truncarNombre(string nombre, int n) {
+    string truncado = "";
+    for (int i = 0; i < nombre.length();
+            i++) {                       // Recorre los carácteres del nombre
+        truncado = nombre.substr(0, n); // Trunca el nombre a n caracteres
+    }
+    return truncado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El nombre "Juan Perez" truncado a 5 caracteres se convierte en "Juan".</p>
+
+            <h4>Truncar Correo</h4>
+            <pre><code>
+string Truncado::truncarCorreo(string correo, int n) {
+    string truncado = "";
+    int at_pos = correo.find('@');
+    string usuario = correo.substr(0, at_pos);
+    
+    if (n > usuario.length()) {
+        truncado = correo.substr(at_pos, correo.length());
+    } else {
+        for (int i = 0; i < correo.length(); i++) {
+        if (correo[i] == '@') {
+            truncado += correo.substr(i, correo.length());
+            break;
+        } else if (i < at_pos && i < n) {
+            truncado += correo[i];
+        }
+        }
+    }
+    return truncado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El correo "juanperez@gmail.com" truncado a 10 caracteres se convierte en "juanperez".</p>
+
+            <h4>Truncar Tarjeta</h4>
+            <pre><code>
+string Truncado::truncarTarjeta(string tarjeta, int n) {
+    string truncado = "";
+    for (int i = 0; i < n; i++) { // Recorre los carácteres de la tarjeta
+        truncado += tarjeta[i];     // Agrega el carácter al truncado final
+    }
+    return truncado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>La tarjeta "1234567890123456" truncada a 4 caracteres se convierte en "1234".</p>
+
+            <h4>Truncar Mensaje</h4>
+            <pre><code>
+string Truncado::truncarMensaje(string mensaje, int n) {
+    string truncado = "";
+    for (int i = 0; i < mensaje.length();
+            i++) {                        // Recorre los carácteres del mensaje
+        truncado = mensaje.substr(0, n); // Trunca el mensaje a n caracteres
+    }
+    return truncado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El mensaje "Hola Mundo" truncado a 5 caracteres se convierte en "Hola".</p>
+
+            <h4>Truncar Archivo</h4>
+            <pre><code>
+void Truncado::truncarArchivo(const string &inputFileName, const string &outputFileName, int n) {
+    ifstream entrada(inputFileName);
+    ofstream salida(outputFileName);
+
+    if (!entrada.is_open()) {
+        cerr << "Error abriendo el archivo de entrada: " << inputFileName << endl;
+        return;
+    }
+    if (!salida.is_open()) {
+        cerr << "Error abriendo el archivo de salida: " << outputFileName << endl;
+        return;
+    }
+
+    Utils util;
+    string linea;
+    while (getline(entrada, linea)) {
+        // Determinar el tipo de dato y truncar
+        string truncado;
+        if (util.esNumeroTarjeta(linea)) {
+            truncado = truncarTarjeta(linea, n);
+        } else if (util.esCorreo(linea)) {
+            truncado = truncarCorreo(linea, n);
+        } else if (util.esNombre(linea)) {
+            truncado = truncarNombre(linea, n);
+        } else {
+            truncado = linea; // Si no se reconoce, dejar la línea tal cual
+        }
+        salida << truncado << endl;
+    }
+    entrada.close();
+    salida.close();
+    cout << "El contenido truncado se ha guardado en " << outputFileName << endl;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <pre>
+archivo.txt:
+Datos de persona
+Juan Perez
+juanperez@gmaillcom
+1234567890123456
+Transferencia </pre>
+            <pre>
+archivo_truncado.txt:
+Datos
+Juan 
+juan 
+1234
+Trans </pre>
+        </section>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
