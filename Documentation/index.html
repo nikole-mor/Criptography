@@ -8,15 +8,16 @@
 </head>
 <body>
     <div class="sidebar">
+        <h1>Seguridad de Datos en C++</h1>
         <h2>Documentación</h2>
         <ul>
           <li>
               <button class="dropdown-btn">
-                  Introducción 
+                  Inicio 
                   <span class="arrow">▼</span>
               </button>
               <ul class="dropdown-content">
-                  <li><a href="#introduccion">¿Qué es?</a></li>
+                  <li><a href="#introduccion">Introducción</a></li>
                   <li><a href="#objetivos">Objetivos</a></li>
                   <li><a href="#estructura">Estructura del proyecto</a></li>
               </ul>
@@ -31,19 +32,21 @@
                   <li><a href="#modulo-enmascarado">Enmascarado</a></li>
                   <li><a href="#modulo-tokenizado">Tokenizado</a></li>
                   <li><a href="#modulo-truncado">Truncado</a></li>
+                  <li><a href="#modulo-utilidades">Utilidades</a></li>
               </ul>
           </li>
           <li><a href="#uso">Guía de Uso</a></li>
+          <li><a href="#referencias">Referencias</a></li>
       </ul>
       
     </div>
     <div class="main-content">
         <header>
-            <h1>Cifrado y Manipulación de Datos en C++</h1>
+            <h1>Soluciones de Seguridad de Datos en C++</h1>
         </header>
         <section id="introduccion">
             <div class="imagen">
-                <img src="img/cripto.png" alt="">
+                <img src="img/DataSecurityBanner.jpg" alt="">
             </div>
             
             <h2>Introducción</h2>
@@ -58,38 +61,648 @@
           </section>
         <section id="objetivos">
             <h2>Objetivos</h2>
-            <p>El principal objetivo es implementar funciones seguras y prácticas para manejar datos en C++.</p>
+            <p>El objetivo principal de este proyecto es implementar funciones seguras y prácticas para la protección de datos en C++.</p>
+            <p></p>
         </section>
         <section id="estructura">
             <h2>Estructura del Proyecto</h2>
+            <p>El proyecto está organizado en diferentes módulos. Cada uno contiene una clase con métodos específicos para realizar operaciones de cifrado, enmascaramiento, tokenización y truncado.</p>
             <pre>
-      Proyecto/
-      ├── include/
-      │   ├── Cifrado.h
-      │   ├── Enmascarado.h
-      │   ├── Tokenizado.h
-      │   ├── Truncado.h
-      ├── src/
-      │   ├── cifrado.cpp
-      │   ├── enmascarado.cpp
-      │   ├── tokenizado.cpp
-      │   ├── truncado.cpp
-      │   ├── main.cpp
-      ├── archivo.txt            # Archivo de entrada de ejemplo
-      ├── archivo_cifrado.txt    # Archivo generado como resultado
-      └── README.md              # Documentación del proyecto
-            </pre>
-          </section>
+    Proyecto/
+    ├── include/
+    │   ├── Cifrado.h
+    │   ├── Enmascarado.h
+    │   ├── Tokenizado.h
+    │   ├── Truncado.h
+    ├── src/
+    │   ├── cifrado.cpp
+    │   ├── enmascarado.cpp
+    │   ├── tokenizado.cpp
+    │   ├── truncado.cpp
+    │   ├── main.cpp
+    ├── archivo.txt            # Archivo de entrada de ejemplo
+    ├── archivo_cifrado.txt    # Archivo generado como resultado
+    └── README.md              # Documentación del proyecto </pre>
+        </section>
         <section id="modulo-cifrado">
             <h2>Cifrado</h2>
             <p>Convierte datos en un formato seguro mediante un algoritmo de desplazamiento.</p>
+            <h3>Algoritmo de Cifrado</h3>
+            <p>El algoritmo de cifrado utilizado en este proyecto es el cifrado César, que desplaza cada carácter del texto original un número fijo de posiciones en el alfabeto.</p>
+            <h3>Clase Cifrado</h3>
+            <pre><code>
+#ifndef CIFRADO_H
+#define CIFRADO_H
+
+#include <string>
+using namespace std;
+
+class Cifrado { // Clase para cifrar y descifrar
+public:
+    string cifrarMensaje(string dato, int llave); // Cifra un mensaje con método Cesar
+    string descifrarMensaje(string dato, int llave); // Descifra un mensaje con método Cesar
+    void cifrarArchivo(const string &inputFile, const string &outputFile, int llave); // Cifra el contenido de un archivo con el método Cesar
+    void descifrarArchivo(const string &inputFile, const string &outputFile, int llave); // Descifra el contenido de un archivo con el método Cesar
+};
+
+#endif
+            </code></pre>
+            <h3>Ejemplos de Uso</h3>
+            <h4>Cifrar Mensaje</h4>
+            <pre><code>
+string Cifrado::cifrarMensaje(string dato, int llave) {
+    string resultado = "";
+    
+    for (char c : dato) {
+        if (isalpha(c)) { // Si el carácter es una letra
+        char base = islower(c) ? 'a' : 'A';
+        resultado += (c - base + llave) % 26 + base;
+        } else if (isdigit(c)) { // Si el carácter es un dígito
+        resultado += (c - '0' + llave) % 10 + '0';
+        } else { // Si el carácter no es una letra ni un dígito
+        resultado += c;
+        }
+    }
+    return resultado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El texto "Hola Mundo" cifrado con un desplazamiento (llave)de 3 se convierte en "Krod Pxqgr".</p>
+
+            <h4>Descifrar Mensaje</h4>
+            <pre><code>
+string Cifrado::descifrarMensaje(string dato, int llave) {
+    string resultado = "";
+    for (char c : dato) {
+        if (isalpha(c)) { // Si el carácter es una letra
+        char base = islower(c) ? 'a' : 'A';
+        resultado += (c - base - llave + 26) % 26 + base;
+        } else if (isdigit(c)) { // Si el carácter es un dígito
+        resultado += (c - '0' - llave + 10) % 10 + '0';
+        } else { // Si el carácter no es una letra ni un dígito
+        resultado += c;
+        }
+    }
+    return resultado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El texto "Krod Pxqgr" descifrado con un desplazamiento (llave) de 3 se convierte en "Hola Mundo".</p>
+
+            <h4>Cifrar Archivo</h4>
+            <pre><code>
+void Cifrado::cifrarArchivo(const string &inputFile, const string &outputFile, int llave) {
+    // Abrir archivo de entrada
+    ifstream entrada(inputFile);
+    if (!entrada.is_open()) {
+        cerr << "Error: No se pudo abrir el archivo de entrada: " << inputFile << endl;
+        return;
+    }
+
+    // Leer archivo de entrada
+    string linea, contenido;
+    while (getline(entrada, linea)) {
+        contenido += linea + "\n";
+    }
+    entrada.close();
+
+    // Cifrar el contenido leído
+    string contenidoCifrado = cifrarMensaje(contenido, llave);
+
+    // Guardar el archivo cifrado
+    ofstream salida(outputFile);
+    if (!salida.is_open()) {
+        cerr << "Error: No se pudo abrir el archivo de salida: " << outputFile << endl;
+        return;
+    }
+    salida << contenidoCifrado;
+    salida.close();
+    cout << "El contenido cifrado se ha guardado en " << outputFile << endl;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <pre>
+archivo.txt:
+Datos de persona
+Juan Perez
+juanperez@gmaillcom
+1234567890123456
+Transferencia </pre>
+            <pre>
+archivo_cifrado.txt:
+Ebupt ef qfstpob
+Kvbo Qfsfa
+kvboqfsfa@hnbjm.dpn
+2345678901234567
+Usbotgfsfodjb </pre>
+
+            <h4>Descifrar Archivo</h4>
+            <pre><code>
+void Cifrado::descifrarArchivo(const string &inputFile, const string &outputFile, int llave) {
+    // Abrir archivo de entrada
+    ifstream entrada(inputFile);
+    if (!entrada.is_open()) {
+        cerr << "Error: No se pudo abrir el archivo de entrada: " << inputFile
+            << endl;
+        return;
+    }
+
+    // Leer archivo de entrada
+    string linea, contenido;
+    while (getline(entrada, linea)) {
+        contenido += linea + "\n";
+    }
+    entrada.close();
+
+    // Cifrar el contenido leído
+    string contenidoDescifrado = descifrarMensaje(contenido, llave);
+
+    // Guardar el archivo cifrado
+    ofstream salida(outputFile);
+    if (!salida.is_open()) {
+        cerr << "Error: No se pudo abrir el archivo de salida: " << outputFile
+            << endl;
+        return;
+    }
+    salida << contenidoDescifrado;
+    salida.close();
+    cout << "El contenido descifrado se ha guardado en " << outputFile << endl;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <pre>
+archivo.txt:
+Datos de persona
+Juan Perez
+juanperez@gmaillcom
+1234567890123456
+Transferencia </pre>
+            <pre>
+archivo_cifrado.txt:
+Ebupt ef qfstpob
+Kvbo Qfsfa
+kvboqfsfa@hnbjm.dpn
+2345678901234567
+Usbotgfsfodjb </pre>
         </section>
+
+        <section id="modulo-enmascarado">
+            <h2>Enmascarado</h2>
+            <p>Oculta parte de los datos sensibles para mostrar solo la información necesaria.</p>
+
+            <h3>Clase Enmascarado</h3>
+            <pre><code>
+#ifndef ENMASCARADO_H
+#define ENMASCARADO_H
+
+#include <string>
+using namespace std;
+
+class Enmascarado {
+public:
+    string enmascararTarjeta(string dato, char mascara);
+    string enmascararNombre(string dato, char mascara);
+    string enmascararCorreo(string dato, char mascara);
+    void enmascararArchivo(const string& inputFileName, const string& outputFileName, char mascara);
+
+};
+
+#endif 
+            </code></pre>
+            <h3>Ejemplos de Uso</h3>
+            <h4>Enmascarar Tarjeta</h4>
+            <pre><code>
+string Enmascarado::enmascararTarjeta(string dato, char mascara) {
+    string enmascarado = "";
+    for (int i = 0; i < dato.length(); i++) { // Recorre el string
+        if (i < 12) { // Si son los primeros 12 carácteres de la tarjeta
+        enmascarado += mascara; // Agrega la mascara
+        } else {                  // De lo contrario, no agrega la mascara
+        enmascarado += dato[i];
+        }
+    }
+    return enmascarado;
+}
+        </code></pre>
+        <h4>Resultado</h4>
+        <p>La tarjeta "1234567890123456" enmascarada con el carácter '*' se convierte en "************3456".</p>
+
+        <h4>Enmascarar Nombre</h4>
+        <pre><code>
+string Enmascarado::enmascararNombre(string dato, char mascara) {
+    string enmascarado = "";
+    for (int i = 0; i < dato.length(); i++) { // Recorre el string
+        if (i == 0 || dato[i] == ' ' ||
+            dato[i - 1] == ' ') { // Si es el primer carácter o es un espacio
+        enmascarado += dato[i]; // Agrega el carácter
+        } else {                  // De lo contrario, agrega la mascara
+        enmascarado += mascara;
+        }
+    }
+    return enmascarado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El nombre "Juan Perez" enmascarado con el carácter '*' se convierte en "Juan P****".</p>
+
+            <h4>Enmascarar Correo</h4>
+            <pre><code>
+string Enmascarado::enmascararCorreo(string dato, char mascara) {
+    string enmascarado = "";
+    for (int i = 0; i < dato.length(); i++) { // Recorrer el string
+        if (i == 0) {
+        enmascarado += dato[i]; // Si es el primer carácter, agregalo
+        } else if (dato[i] ==
+                    '@') { // Si es @, agrega todos los carácteres restantes
+        while (i < dato.length()) {
+            enmascarado += dato[i];
+            i++;
+        }
+        break;
+        } else {
+        enmascarado += mascara; // De lo contrario, agrega la mascara
+        }
+    }
+    return enmascarado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El correo "juanperez@gmail.com" enmascarado con el carácter '*' se convierte en "j********@gmail.com".</p>
+
+            <h4>Enmascarar Archivo</h4>
+            <pre><code>
+void Enmascarado::enmascararArchivo(const string &inputFileName, const string &outputFileName, char mascara) {
+    ifstream inputFile(inputFileName);
+    ofstream outputFile(outputFileName);
+
+    if (!inputFile.is_open()) {
+        cerr << "Error abriendo el archivo de entrada: " << inputFileName << endl;
+        return;
+    }
+    if (!outputFile.is_open()) {
+        cerr << "Error abriendo el archivo de salida: " << outputFileName << endl;
+        return;
+    }
+
+    string linea;
+    Utils util;
+    while (getline(inputFile, linea)) {
+        // Determinar el tipo de dato y enmascarar
+        string enmascarado;
+        if (util.esNumeroTarjeta(linea)) {
+            enmascarado = enmascararTarjeta(linea, mascara);
+        } else if (util.esCorreo(linea)) {
+            enmascarado = enmascararCorreo(linea, mascara);
+        } else if (util.esNombre(linea)) {
+            enmascarado = enmascararNombre(linea, mascara);
+        } else {
+            enmascarado = linea; // Si no se reconoce, dejar la línea tal cual
+        }
+        outputFile << enmascarado << endl; // Escribir la línea enmascarada en el archivo de salida
+    }
+    inputFile.close();
+    outputFile.close();
+    cout << "El contenido enmascarado se ha guardado en " << outputFileName << endl;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <pre>
+archivo.txt:
+Datos de persona
+Juan Perez
+juanperez@gmaillcom
+1234567890123456
+Transferencia </pre>
+            <pre>
+archivo_enmascarado.txt:
+D**** d* p******
+J*** P****
+j********@gmail.com
+************3456
+T************ </pre>
+        </section>
+
+        <section id="modulo-tokenizado">
+            <h2>Tokenizado</h2>
+            <p>Convierte datos originales en tokens únicos que no revelan información real.</p>
+            <h2>Clase Tokenizado</h2>
+            <pre><code>
+#ifndef TOKENIZADO_H
+#define TOKENIZADO_H
+
+#include <string>
+using namespace std;
+
+class Tokenizado { // Clase para tokenizar
+public:
+string tokenizarString(string dato); // Tokeniza un string
+void tokenizarArchivo(const string &inputFileName, const string &outputFileName, char mascara); // Tokeniza un token para un archivo
+};
+
+#endif
+            </code></pre>
+
+            <h3>Ejemplos de Uso</h3>
+            <h4>Tokenizar String</h4>
+            <pre><code>
+string Tokenizado::tokenizarString(string dato) {
+    string token = "";
+    int longitud = 16;
+    string alphanum =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    
+    // token aleatorio
+    for (int i = 0; i < longitud; i++) {
+        token += alphanum[rand() % alphanum.length()];
+    }
+    return token;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El string "Juan Perez" tokenizado se convierte en "1A2B3C4D5E6F7G8H9".</p>
+
+            <h4>Tokenizar Archivo</h4>
+            <pre><code>
+void Tokenizado::tokenizarArchivo(const string &inputFileName, const string &outputFileName, char mascara) {
+    ifstream entrada(inputFileName);  
+    ofstream salida(outputFileName);
+
+    if (!entrada.is_open()) {
+        cerr << "Error abriendo el archivo de entrada: " << inputFileName << endl;
+        return;
+    }
+    // Leer el contenido del archivo
+    string linea, contenido;
+    while (getline(entrada, linea)) {
+        contenido += linea + "\n";
+    }
+    entrada.close();
+
+    // Tokenizar el contenido
+    string contenidoTokenizado = tokenizarString(contenido);
+
+    // Guardar el contenido tokenizado en el archivo de salida
+    if (!salida.is_open()) {
+        cerr << "Error abriendo el archivo de salida: " << outputFileName << endl;
+        return;
+    }
+    salida << contenidoTokenizado;
+    salida.close();
+    cout << "El contenido tokenizado se ha guardado en " << outputFileName << endl;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <pre>
+archivo.txt:
+Datos de persona
+Juan Perez
+juanperez@gmaillcom
+1234567890123456
+Transferencia </pre>
+            <pre>
+archivo_tokenizado.txt:
+fa37JncCHryDsbza </pre>
+        </section>
+        <section id="modulo-truncado">
+            <h2>Truncado</h2>
+            <p>Recorta los datos a una longitud específica para fines de almacenamiento o presentación.</p>
+            <h3>Clase Truncado</h3>
+            <pre><code>
+#ifndef TRUNCADO_H
+#define TRUNCADO_H
+
+#include <string>
+using namespace std;
+
+class Truncado { // Clase para truncar
+public:
+string truncarNombre(string nombre, int n); // Trunca un nombre hasta n caracteres
+string truncarCorreo(string correo, int n); // Trunca un correo hasta n caracteres
+string truncarTarjeta(string tarjeta, int n); // Trunca una tarjeta hasta n caracteres
+string truncarMensaje(string mensaje, int n); // Trunca un mensaje hasta n caracteres
+void truncarArchivo(const string &inputFileName, const string &outputFileName, int n); // Trunca el contenido de un archivo hasta n caracteres
+};
+
+#endif
+            </code></pre>
+
+            <h3>Ejemplos de Uso</h3>
+            <h4>Truncar Nombre</h4>
+            <pre><code>
+string Truncado::truncarNombre(string nombre, int n) {
+    string truncado = "";
+    for (int i = 0; i < nombre.length();
+            i++) {                       // Recorre los carácteres del nombre
+        truncado = nombre.substr(0, n); // Trunca el nombre a n caracteres
+    }
+    return truncado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El nombre "Juan Perez" truncado a 5 caracteres se convierte en "Juan".</p>
+
+            <h4>Truncar Correo</h4>
+            <pre><code>
+string Truncado::truncarCorreo(string correo, int n) {
+    string truncado = "";
+    int at_pos = correo.find('@');
+    string usuario = correo.substr(0, at_pos);
+    
+    if (n > usuario.length()) {
+        truncado = correo.substr(at_pos, correo.length());
+    } else {
+        for (int i = 0; i < correo.length(); i++) {
+        if (correo[i] == '@') {
+            truncado += correo.substr(i, correo.length());
+            break;
+        } else if (i < at_pos && i < n) {
+            truncado += correo[i];
+        }
+        }
+    }
+    return truncado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El correo "juanperez@gmail.com" truncado a 10 caracteres se convierte en "juanperez".</p>
+
+            <h4>Truncar Tarjeta</h4>
+            <pre><code>
+string Truncado::truncarTarjeta(string tarjeta, int n) {
+    string truncado = "";
+    for (int i = 0; i < n; i++) { // Recorre los carácteres de la tarjeta
+        truncado += tarjeta[i];     // Agrega el carácter al truncado final
+    }
+    return truncado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>La tarjeta "1234567890123456" truncada a 4 caracteres se convierte en "1234".</p>
+
+            <h4>Truncar Mensaje</h4>
+            <pre><code>
+string Truncado::truncarMensaje(string mensaje, int n) {
+    string truncado = "";
+    for (int i = 0; i < mensaje.length();
+            i++) {                        // Recorre los carácteres del mensaje
+        truncado = mensaje.substr(0, n); // Trunca el mensaje a n caracteres
+    }
+    return truncado;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El mensaje "Hola Mundo" truncado a 5 caracteres se convierte en "Hola".</p>
+
+            <h4>Truncar Archivo</h4>
+            <pre><code>
+void Truncado::truncarArchivo(const string &inputFileName, const string &outputFileName, int n) {
+    ifstream entrada(inputFileName);
+    ofstream salida(outputFileName);
+
+    if (!entrada.is_open()) {
+        cerr << "Error abriendo el archivo de entrada: " << inputFileName << endl;
+        return;
+    }
+    if (!salida.is_open()) {
+        cerr << "Error abriendo el archivo de salida: " << outputFileName << endl;
+        return;
+    }
+
+    Utils util;
+    string linea;
+    while (getline(entrada, linea)) {
+        // Determinar el tipo de dato y truncar
+        string truncado;
+        if (util.esNumeroTarjeta(linea)) {
+            truncado = truncarTarjeta(linea, n);
+        } else if (util.esCorreo(linea)) {
+            truncado = truncarCorreo(linea, n);
+        } else if (util.esNombre(linea)) {
+            truncado = truncarNombre(linea, n);
+        } else {
+            truncado = linea; // Si no se reconoce, dejar la línea tal cual
+        }
+        salida << truncado << endl;
+    }
+    entrada.close();
+    salida.close();
+    cout << "El contenido truncado se ha guardado en " << outputFileName << endl;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <pre>
+archivo.txt:
+Datos de persona
+Juan Perez
+juanperez@gmaillcom
+1234567890123456
+Transferencia </pre>
+            <pre>
+archivo_truncado.txt:
+Datos
+Juan 
+juan 
+1234
+Trans </pre>
+        </section>
+
+        <section id="modulo-utilidades">
+            <h2>Utilidades</h2>
+            <p>La clase Utils proporciona funciones de utilidad para determinar tipo de datos y validarlos.</p>
+            <h3>Clase Utils</h3>
+            <pre><code>
+#ifndef UTILS_H
+#define UTILS_H
+
+#include <string>
+using namespace std;
+
+class Utils { // Clase para validar tipos de datos
+public:
+    bool esNumeroTarjeta(const string &dato); // Valida si un string es un número de tarjeta
+    bool esCorreo(const string &dato); // Valida si un string es un correo
+    bool esNombre(const string &dato); // Valida si un string es un nombre
+};
+
+#endif
+            </code></pre>
+
+            <h3>Ejemplos de Uso</h3>
+            <h4>Validar Número de Tarjeta</h4>
+            <pre><code>
+// Función para saber si el dato es una tarjeta
+bool Utils::esNumeroTarjeta(const string &dato) {
+    // digitos de la tarjeta
+    if (dato.length() != 16)
+        return false;
+    for (char c : dato) {
+        if (!isdigit(c))
+        return false; // solo acepta numeros
+    }
+    return true;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El string "1234567890123456" es un número de tarjeta válido (true).</p>
+
+            <h4>Validar Correo</h4>
+            <pre><code>
+// Función para validar si el dato es un correo
+bool Utils::esCorreo(const string &dato) {
+    size_t atPos = dato.find('@');
+    size_t dotPos = dato.find('.', atPos);
+    return atPos != string::npos && dotPos != string::npos;
+}
+        </code></pre>
+        <h4>Resultado</h4>
+        <p>El string "juanperez@gmail.com" es un correo válido (true).</p>
+
+        <h4>Validar Nombre</h4>
+        <pre><code>
+// Función para validar si el dato es un nombre
+bool Utils::esNombre(const string &dato) {
+    // comprobar que el dato contenga solo letras y espacios
+    for (char c : dato) {
+        if (!(isalpha(c) || c == ' '))
+        return false;
+    }
+    return true;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El string "Juan Perez" es un nombre válido (true).</p>
+        </section>
+
+
         <section id="uso">
             <h2>Guía de Uso</h2>
-            <pre><code>
-g++ -std=c++11 -o main src/*.cpp -I include
-./main
-            </code></pre>
+            <h3>Compilación</h3>
+            <p>Para compilar el proyecto, ejecutar el siguiente comando en la terminal:</p>
+            <pre><code>g++ src/*.cpp -o main</code></pre>
+            <h3>Ejecución</h3>
+            <p>Para ejecutar el programa, usar el siguiente comando:</p>
+            <pre><code>./main</code></pre>
+            <h3>Interacción</h3>
+            <p>El programa desplegará un menú y pedirá que elija una opción para cifrar, enmascarar, tokenizar o truncar datos. Se deben las instrucciones en pantalla para seleccionar la operación deseada y proporcionar los datos de entrada.</p>
+            <pre>
+===================================
+|     Selecciona una opción       |
+===================================
+| [1] Cifrado                     |
+| [2] Descifrado                  |
+| [3] Enmascarado                 |
+| [4] Tokenizado                  |
+| [5] Truncado                    |
+| [6] Salir                       |
+-----------------------------------
+--> </pre>
+        </section>
+        <section id="referencias">
+            <h2>Referencias</h2>
+            <p>Proyecto desarrollado por Diego Córdova y Nikole Morales, como parte del programa de capacitación Nuevos Talentos en RSec.</p>
+            <p>Para más información, acceder al repositorio en GitHub: <a href="https://github.com/nikole-mor/Criptography">Criptography</a></p>
+            <img src="img/logoRSec.png" alt="rseclogo">
+            <p><a href="#introduccion">Volver al Inicio ▲</a></p>
         </section>
     </div>
     <script src="script.js"></script>

@@ -1,20 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 html{
   font-family: 'Poppins', sans-serif;
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
   font-family: inherit;
   color: #333;
+  background-color: #f1f1f1;
   display: flex;
   height: 100vh;
 }
 section {
   margin-bottom: 20px;
   padding: 15px;
-  background: #fff;
+  background: #f1f1f1;
+  border: 2px solid #d9d9d9;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: 0.2s;
+}
+
+section:hover {
+  background-color: #fff;
 }
 
 .sidebar {
@@ -25,7 +33,6 @@ section {
   overflow-y: auto;
 }
 
-
 /* Opcional: Ajusta el contenido principal para que no quede debajo de la barra lateral */
 .main-content {
   margin-left: 50px; /* Este valor debe coincidir con el ancho de la sidebar */
@@ -34,7 +41,27 @@ section {
 }
 
 .imagen {
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagen img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.imagen img:hover {
+  transform: scale(1.005);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar h1 {
+  font-size: 25px;
+  color:#a8d1f0;
 }
 
 .sidebar h2 {
@@ -51,7 +78,7 @@ section {
 }
 
 .sidebar ul li {
-  margin: 10px 0;
+  margin: 5px 0;
   position: relative;
 }
 
@@ -62,7 +89,7 @@ section {
   font-size: 16px;
   display: flex;
   width: 100%;
-  padding: 8px 0;
+  padding: 8px;
   text-align: left;
   background: none;
   border: none;
@@ -84,15 +111,17 @@ section {
 
 .dropdown-btn:hover,
 .sidebar ul li a:hover {
-  text-decoration: underline;
+  color: #a8d1f0;
+  border-radius: 5px;
 }
 
 .dropdown-content {
-  display: block;
+  display: none; /*Esconder el contenido al inicio*/
   list-style: none;
   padding: 0;
   margin: 0;
-  margin-left: 15px;
+  background: #2d313c;
+  border-radius: 5px;
 }
 
 .dropdown-content li {
@@ -100,12 +129,12 @@ section {
 }
 
 .dropdown-content li a {
-  font-size: 14px;
+  font-size: 12px;
   color: #a8d1f0;
 }
 
 .dropdown-content li a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .main-content {
@@ -133,9 +162,14 @@ h2 {
 }
 
 pre {
+  color: #153759;
   background-color: #f5f5f5;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   overflow-x: auto;
+}
+
+pre:hover {
+  background-color: #f3f8ff;
 }
