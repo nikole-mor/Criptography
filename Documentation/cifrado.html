@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h1>Seguridad de Datos en C++</h1>
+        <h2>Documentación</h2>
+        <ul>
+          <li>
+              <button class="dropdown-btn">
+                  Inicio 
+                  <span class="arrow">▼</span>
+              </button>
+              <ul class="dropdown-content">
+                  <li><a href="#introduccion">Introducción</a></li>
+                  <li><a href="#objetivos">Objetivos</a></li>
+                  <li><a href="#estructura">Estructura del proyecto</a></li>
+              </ul>
+          </li>
+          <li>
+              <button class="dropdown-btn">
+                  Módulos 
+                  <span class="arrow">▼</span>
+              </button>
+              <ul class="dropdown-content">
+                <li><a href="cifrado.html">Cifrado</a></li>
+                <li><a href="enmascarado.html">Enmascarado</a></li>
+                <li><a href="tokenizado.html">Tokenizado</a></li>
+                <li><a href="truncado.html">Truncado</a></li>
+                <li><a href="utilidades.html">Utilidades</a></li>
+            </ul>
+          </li>
+          <li><a href="#uso">Guía de Uso</a></li>
+          <li><a href="#referencias">Referencias</a></li>
+      </ul>
+      
+    </div>
+    <div class="main-content">
+        <header>
+            <h1>Soluciones de Seguridad de Datos en C++</h1>
+        </header>
+        <p><a href="index.html"><-- Inicio</a></p>
+        <section id="modulo-cifrado">
+            <h2>Cifrado</h2>
+            <p>Convierte datos en un formato seguro mediante un algoritmo de desplazamiento.</p>
+            <h3>Algoritmo de Cifrado</h3>
+            <p>El algoritmo de cifrado utilizado en este proyecto es el cifrado César, que desplaza cada carácter del texto original un número fijo de posiciones en el alfabeto.</p>
+            <h3>Clase Cifrado</h3>
+<pre><code>
+<span class="hljs-comment">#ifndef</span> <span class="hljs-keyword">CIFRADO_H</span>
+<span class="hljs-comment">#define</span> <span class="hljs-keyword">CIFRADO_H</span>
+    
+<span class="hljs-keyword">#include</span> <span class="hljs-string">&lt;string&gt;</span>
+<span class="hljs-comment">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-data">std</span>;
+    
+<span class="hljs-keyword">class</span> <span class="hljs-data">Cifrado</span> { <span class="hljs-comment">// Clase para cifrar y descifrar</span>
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-data">string</span> <span class="hljs-function">cifrarMensaje</span>(<span class="hljs-data">string</span> <span class="hljs-var">dato</span>, <span class="hljs-keyword">int</span> <span class="hljs-var">llave</span>); <span class="hljs-comment">// Cifra un mensaje con método Cesar</span>
+        <span class="hljs-data">string</span> <span class="hljs-function">descifrarMensaje</span>(<span class="hljs-data">string</span> <span class="hljs-var">dato</span>, <span class="hljs-keyword">int</span> <span class="hljs-var">llave</span>); <span class="hljs-comment">// Descifra un mensaje con método Cesar</span>
+        <span class="hljs-keyword">void</span> <span class="hljs-function">cifrarArchivo</span>(<span class="hljs-keyword">const</span> <span class="hljs-data">string</span> &<span class="hljs-var">inputFile</span>, <span class="hljs-keyword">const</span> <span class="hljs-data">string</span> &<span class="hljs-var">outputFile</span>, <span class="hljs-keyword">int</span> <span class="hljs-var">llave</span>); <span class="hljs-comment">// Cifra el contenido de un archivo con el método Cesar</span>
+        <span class="hljs-keyword">void</span> <span class="hljs-function">descifrarArchivo</span>(<span class="hljs-keyword">const</span> <span class="hljs-data">string</span> &<span class="hljs-var">inputFile</span>, <span class="hljs-keyword">const</span> <span class="hljs-data">string</span> &<span class="hljs-var">outputFile</span>, <span class="hljs-keyword">int</span> <span class="hljs-var">llave</span>); <span class="hljs-comment">// Descifra el contenido de un archivo con el método Cesar</span>
+};
+    
+<span class="hljs-comment">#endif</span>
+    </code></pre>
+
+            <h3>Ejemplos de Uso</h3>
+            <h4>Cifrar Mensaje</h4>
+<pre><code>
+<span class="hljs-data">string</span> <span class="hljs-class">Cifrado</span>::<span class="hljs-function">cifrarMensaje</span>(<span class="hljs-data">string</span> <span class="hljs-var">dato</span>, <span class="hljs-keyword">int</span> <span class="hljs-var">llave</span>) {
+<span class="hljs-data">string</span> <span class="hljs-var">resultado</span> = <span class="hljs-string">""</span>;
+        
+<span class="hljs-keyword">for</span> (<span class="hljs-data">char</span> <span class="hljs-var">c</span> : <span class="hljs-var">dato</span>) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-function">isalpha</span>(<span class="hljs-var">c</span>)) { <span class="hljs-comment">// Si el carácter es una letra</span>
+        <span class="hljs-data">char</span> <span class="hljs-var">base</span> = <span class="hljs-function">islower</span>(<span class="hljs-var">c</span>) ? <span class="hljs-string">'a'</span> : <span class="hljs-string">'A'</span>;
+        <span class="hljs-var">resultado</span> += (<span class="hljs-var">c</span> - <span class="hljs-var">base</span> + <span class="hljs-var">llave</span>) % <span class="hljs-number">26</span> + <span class="hljs-var">base</span>;
+    } <span class="hljs-keyword">else if</span> (<span class="hljs-function">isdigit</span>(<span class="hljs-var">c</span>)) { <span class="hljs-comment">// Si el carácter es un dígito</span>
+        <span class="hljs-var">resultado</span> += (<span class="hljs-var">c</span> - <span class="hljs-string">'0'</span> + <span class="hljs-var">llave</span>) % <span class="hljs-number">10</span> + <span class="hljs-string">'0'</span>;
+    } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// Si el carácter no es una letra ni un dígito</span>
+    <span class="hljs-var">resultado</span> += <span class="hljs-var">c</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-var">resultado</span>;
+}
+</code></pre>
+
+            <h4>Resultado</h4>
+            <p>El texto "Hola Mundo" cifrado con un desplazamiento (llave)de 3 se convierte en "Krod Pxqgr".</p>
+
+            <h4>Descifrar Mensaje</h4>
+<pre><code>
+<span class="hljs-data">string</span> <span class="hljs-class">Cifrado</span>::<span class="hljs-function">descifrarMensaje</span>(<span class="hljs-data">string</span> <span class="hljs-var">dato</span>, <span class="hljs-keyword">int</span> <span class="hljs-var">llave</span>) {
+    <span class="hljs-data">string</span> <span class="hljs-var">resultado</span> = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-data">char</span> <span class="hljs-var">c</span> : <span class="hljs-var">dato</span>) {
+        <span class="hljs-keyword">if</span> (<span class="hljs-function">isalpha</span>(<span class="hljs-var">c</span>)) { <span class="hljs-comment">// Si el carácter es una letra</span>
+            <span class="hljs-data">char</span> <span class="hljs-var">base</span> = <span class="hljs-function">islower</span>(<span class="hljs-var">c</span>) ? <span class="hljs-string">'a'</span> : <span class="hljs-string">'A'</span>;
+            <span class="hljs-var">resultado</span> += (<span class="hljs-var">c</span> - <span class="hljs-var">base</span> - <span class="hljs-var">llave</span> + <span class="hljs-number">26</span>) % <span class="hljs-number">26</span> + <span class="hljs-var">base</span>;
+        } <span class="hljs-keyword">else if</span> (<span class="hljs-function">isdigit</span>(<span class="hljs-var">c</span>)) { <span class="hljs-comment">// Si el carácter es un dígito</span>
+            <span class="hljs-var">resultado</span> += (<span class="hljs-var">c</span> - <span class="hljs-string">'0'</span> - <span class="hljs-var">llave</span> + <span class="hljs-number">10</span>) % <span class="hljs-number">10</span> + <span class="hljs-string">'0'</span>;
+        } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// Si el carácter no es una letra ni un dígito</span>
+            <span class="hljs-var">resultado</span> += <span class="hljs-var">c</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-var">resultado</span>;
+}
+</code></pre>
+
+            <h4>Resultado</h4>
+            <p>El texto "Krod Pxqgr" descifrado con un desplazamiento (llave) de 3 se convierte en "Hola Mundo".</p>
+
+            <h4>Cifrar Archivo</h4>
+            <pre><code>
+<span class="hljs-keyword">void</span> <span class="hljs-function">Cifrado::cifrarArchivo</span>(<span class="hljs-keyword">const</span> <span class="hljs-data">string</span> &<span class="hljs-var">inputFile</span>, <span class="hljs-keyword">const</span> <span class="hljs-data">string</span> &<span class="hljs-var">outputFile</span>, <span class="hljs-keyword">int</span> <span class="hljs-var">llave</span>) {
+    <span class="hljs-comment">// Abrir archivo de entrada</span>
+    <span class="hljs-data">ifstream</span> <span class="hljs-var">entrada</span>(<span class="hljs-var">inputFile</span>);
+    <span class="hljs-keyword">if</span> (!<span class="hljs-var">entrada</span>.is_open()) {
+        <span class="hljs-var">cerr</span> << <span class="hljs-string">"Error: No se pudo abrir el archivo de entrada: "</span> << <span class="hljs-var">inputFile</span> << <span class="hljs-var">endl</span>;
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-comment">// Leer archivo de entrada</span>
+    <span class="hljs-data">string</span> <span class="hljs-var">linea</span>, <span class="hljs-var">contenido</span>;
+    <span class="hljs-keyword">while</span> (<span class="hljs-var">getline</span>(<span class="hljs-var">entrada</span>, <span class="hljs-var">linea</span>)) {
+        <span class="hljs-var">contenido</span> += <span class="hljs-var">linea</span> + <span class="hljs-string">"\n"</span>;
+    }
+    <span class="hljs-var">entrada</span>.close();
+
+    <span class="hljs-comment">// Cifrar el contenido leído</span>
+    <span class="hljs-data">string</span> <span class="hljs-var">contenidoCifrado</span> = <span class="hljs-function">cifrarMensaje</span>(<span class="hljs-var">contenido</span>, <span class="hljs-var">llave</span>);
+
+    <span class="hljs-comment">// Guardar el archivo cifrado</span>
+    <span class="hljs-data">ofstream</span> <span class="hljs-var">salida</span>(<span class="hljs-var">outputFile</span>);
+    <span class="hljs-keyword">if</span> (!<span class="hljs-var">salida</span>.is_open()) {
+        <span class="hljs-var">cerr</span> << <span class="hljs-string">"Error: No se pudo abrir el archivo de salida: "</span> << <span class="hljs-var">outputFile</span> << <span class="hljs-var">endl</span>;
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-var">salida</span> << <span class="hljs-var">contenidoCifrado</span>;
+    <span class="hljs-var">salida</span>.close();
+    <span class="hljs-var">cout</span> << <span class="hljs-string">"El contenido cifrado se ha guardado en "</span> << <span class="hljs-var">outputFile</span> << <span class="hljs-var">endl</span>;
+}
+</code></pre>
+            <h4>Resultado</h4>
+            <pre>
+archivo.txt:
+Datos de persona
+Juan Perez
+juanperez@gmaillcom
+1234567890123456
+Transferencia </pre>
+            <pre>
+archivo_cifrado.txt:
+Ebupt ef qfstpob
+Kvbo Qfsfa
+kvboqfsfa@hnbjm.dpn
+2345678901234567
+Usbotgfsfodjb </pre>
+
+            <h4>Descifrar Archivo</h4>
+            <pre><code>
+<span class="hljs-keyword">void</span> <span class="hljs-function">Cifrado::descifrarArchivo</span>(<span class="hljs-keyword">const</span> <span class="hljs-data">string</span> &<span class="hljs-var">inputFile</span>, <span class="hljs-keyword">const</span> <span class="hljs-data">string</span> &<span class="hljs-var">outputFile</span>, <span class="hljs-keyword">int</span> <span class="hljs-var">llave</span>) {
+    <span class="hljs-comment">// Abrir archivo de entrada</span>
+    <span class="hljs-data">ifstream</span> <span class="hljs-var">entrada</span>(<span class="hljs-var">inputFile</span>);
+    <span class="hljs-keyword">if</span> (!<span class="hljs-var">entrada</span>.is_open()) {
+        <span class="hljs-var">cerr</span> << <span class="hljs-string">"Error: No se pudo abrir el archivo de entrada: "</span> << <span class="hljs-var">inputFile</span>
+            << <span class="hljs-var">endl</span>;
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-comment">// Leer archivo de entrada</span>
+    <span class="hljs-data">string</span> <span class="hljs-var">linea</span>, <span class="hljs-var">contenido</span>;
+    <span class="hljs-keyword">while</span> (<span class="hljs-var">getline</span>(<span class="hljs-var">entrada</span>, <span class="hljs-var">linea</span>)) {
+        <span class="hljs-var">contenido</span> += <span class="hljs-var">linea</span> + <span class="hljs-string">"\n"</span>;
+    }
+    <span class="hljs-var">entrada</span>.close();
+
+    <span class="hljs-comment">// Descifrar el contenido leído</span>
+    <span class="hljs-data">string</span> <span class="hljs-var">contenidoDescifrado</span> = <span class="hljs-function">descifrarMensaje</span>(<span class="hljs-var">contenido</span>, <span class="hljs-var">llave</span>);
+
+    <span class="hljs-comment">// Guardar el archivo descifrado</span>
+    <span class="hljs-data">ofstream</span> <span class="hljs-var">salida</span>(<span class="hljs-var">outputFile</span>);
+    <span class="hljs-keyword">if</span> (!<span class="hljs-var">salida</span>.is_open()) {
+        <span class="hljs-var">cerr</span> << <span class="hljs-string">"Error: No se pudo abrir el archivo de salida: "</span> << <span class="hljs-var">outputFile</span>
+            << <span class="hljs-var">endl</span>;
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-var">salida</span> << <span class="hljs-var">contenidoDescifrado</span>;
+    <span class="hljs-var">salida</span>.close();
+    <span class="hljs-var">cout</span> << <span class="hljs-string">"El contenido descifrado se ha guardado en "</span> << <span class="hljs-var">outputFile</span> << <span class="hljs-var">endl</span>;
+}
+</code></pre>
+
+            <h4>Resultado</h4>
+            <pre>
+archivo.txt:
+Datos de persona
+Juan Perez
+juanperez@gmaillcom
+1234567890123456
+Transferencia </pre>
+            <pre>
+archivo_cifrado.txt:
+Ebupt ef qfstpob
+Kvbo Qfsfa
+kvboqfsfa@hnbjm.dpn
+2345678901234567
+Usbotgfsfodjb </pre>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

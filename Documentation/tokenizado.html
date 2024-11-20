@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h1>Seguridad de Datos en C++</h1>
+        <h2>Documentación</h2>
+        <ul>
+          <li>
+              <button class="dropdown-btn">
+                  Inicio 
+                  <span class="arrow">▼</span>
+              </button>
+              <ul class="dropdown-content">
+                  <li><a href="#introduccion">Introducción</a></li>
+                  <li><a href="#objetivos">Objetivos</a></li>
+                  <li><a href="#estructura">Estructura del proyecto</a></li>
+              </ul>
+          </li>
+          <li>
+              <button class="dropdown-btn">
+                  Módulos 
+                  <span class="arrow">▼</span>
+              </button>
+              <ul class="dropdown-content">
+                  <li><a href="cifrado.html">Cifrado</a></li>
+                  <li><a href="enmascarado.html">Enmascarado</a></li>
+                  <li><a href="tokenizado.html">Tokenizado</a></li>
+                  <li><a href="truncado.html">Truncado</a></li>
+                  <li><a href="utilidades.html">Utilidades</a></li>
+              </ul>
+          </li>
+          <li><a href="#uso">Guía de Uso</a></li>
+          <li><a href="#referencias">Referencias</a></li>
+      </ul>
+      
+    </div>
+    <div class="main-content">
+        <header>
+            <h1>Soluciones de Seguridad de Datos en C++</h1>
+        </header>
+        <p><a href="index.html"><-- Inicio</a></p>
+
+
+        <section id="modulo-tokenizado">
+            <h2>Tokenizado</h2>
+            <p>Convierte datos originales en tokens únicos que no revelan información real.</p>
+            <h2>Clase Tokenizado</h2>
+            <pre><code>
+#ifndef TOKENIZADO_H
+#define TOKENIZADO_H
+
+#include <string>
+using namespace std;
+
+class Tokenizado { // Clase para tokenizar
+public:
+string tokenizarString(string dato); // Tokeniza un string
+void tokenizarArchivo(const string &inputFileName, const string &outputFileName, char mascara); // Tokeniza un token para un archivo
+};
+
+#endif
+            </code></pre>
+
+            <h3>Ejemplos de Uso</h3>
+            <h4>Tokenizar String</h4>
+            <pre><code>
+string Tokenizado::tokenizarString(string dato) {
+    string token = "";
+    int longitud = 16;
+    string alphanum =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    
+    // token aleatorio
+    for (int i = 0; i < longitud; i++) {
+        token += alphanum[rand() % alphanum.length()];
+    }
+    return token;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <p>El string "Juan Perez" tokenizado se convierte en "1A2B3C4D5E6F7G8H9".</p>
+
+            <h4>Tokenizar Archivo</h4>
+            <pre><code>
+void Tokenizado::tokenizarArchivo(const string &inputFileName, const string &outputFileName, char mascara) {
+    ifstream entrada(inputFileName);  
+    ofstream salida(outputFileName);
+
+    if (!entrada.is_open()) {
+        cerr << "Error abriendo el archivo de entrada: " << inputFileName << endl;
+        return;
+    }
+    // Leer el contenido del archivo
+    string linea, contenido;
+    while (getline(entrada, linea)) {
+        contenido += linea + "\n";
+    }
+    entrada.close();
+
+    // Tokenizar el contenido
+    string contenidoTokenizado = tokenizarString(contenido);
+
+    // Guardar el contenido tokenizado en el archivo de salida
+    if (!salida.is_open()) {
+        cerr << "Error abriendo el archivo de salida: " << outputFileName << endl;
+        return;
+    }
+    salida << contenidoTokenizado;
+    salida.close();
+    cout << "El contenido tokenizado se ha guardado en " << outputFileName << endl;
+}
+            </code></pre>
+            <h4>Resultado</h4>
+            <pre>
+archivo.txt:
+Datos de persona
+Juan Perez
+juanperez@gmaillcom
+1234567890123456
+Transferencia </pre>
+            <pre>
+archivo_tokenizado.txt:
+fa37JncCHryDsbza </pre>
+        </section>
+
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
