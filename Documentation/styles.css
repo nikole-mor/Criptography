@@ -198,8 +198,9 @@ pre {
   border: 1px solid #f5f5f5;
   border-radius: 5px;
   overflow-x: auto;
+  transition: 0.2s;
 }
 
 pre:hover {
-  background-color: #f3f8ff;
+  background-color: #ededed;
 }
