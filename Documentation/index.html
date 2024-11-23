@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="sidebar">
-        <h1>Seguridad de Datos en C++</h1>
+        <h1>Seguridad de Datos en <span class="cpp-title">C++</span> y <span class="py-title">Python</span></h1>
         <h2>Documentación</h2>
         <ul>
           <li>
@@ -28,7 +28,8 @@
                   <span class="arrow">▼</span>
               </button>
               <ul class="dropdown-content">
-                  <li><a href="cifrado.html">Cifrado</a></li>
+                  <li><a href="cifrado.html">Cifrado César C++</a></li>
+                  <li><a href="cifrado.html#modulo-cifrado-python">Cifrado RSA Python</a></li>
                   <li><a href="enmascarado.html">Enmascarado</a></li>
                   <li><a href="tokenizado.html">Tokenizado</a></li>
                   <li><a href="truncado.html">Truncado</a></li>
@@ -42,7 +43,7 @@
     </div>
     <div class="main-content">
         <header>
-            <h1>Soluciones de Seguridad de Datos en C++</h1>
+            <h1>Soluciones de Seguridad de Datos en C++ y Python</h1>
         </header>
         <section id="introduccion">
             <div class="imagen">
@@ -61,7 +62,7 @@
           </section>
         <section id="objetivos">
             <h2>Objetivos</h2>
-            <p>El objetivo principal de este proyecto es implementar funciones seguras y prácticas para la protección de datos en C++.</p>
+            <p>El objetivo principal de este proyecto es implementar funciones seguras y prácticas para la protección de datos en C++ y Python.</p>
             <p></p>
         </section>
         <section id="estructura">
@@ -74,28 +75,33 @@
     │   ├── Enmascarado.h
     │   ├── Tokenizado.h
     │   ├── Truncado.h
+    │   └── Utils.h
     ├── src/
     │   ├── cifrado.cpp
     │   ├── enmascarado.cpp
     │   ├── tokenizado.cpp
     │   ├── truncado.cpp
-    │   ├── main.cpp
+    │   ├── utils.cpp
+    │   └── main.cpp
+    ├── py_rsa/
+    │   ├── cifrarRsa.py
+    |   └── descifrar.py
     ├── archivo.txt            # Archivo de entrada de ejemplo
-    ├── archivo_cifrado.txt    # Archivo generado como resultado
-    └── README.md              # Documentación del proyecto </pre>
+    ├── archivo_cifrado.txt    # Ejemplo de archivo generado como resultado
+    └── README.md              # Acceso a documentación del proyecto</pre>
         </section>
 
         <section id="uso">
             <h2>Guía de Uso</h2>
             <h3>Compilación</h3>
             <p>Para compilar el proyecto, ejecutar el siguiente comando en la terminal:</p>
-            <pre><code>g++ -std=c++11 src/*.cpp main.cpp -o main && ./main</code></pre>
+<pre><code>g++ -std=c++11 src/*.cpp -o main</code></pre>
             <h3>Ejecución</h3>
             <p>Para ejecutar el programa, usar el siguiente comando:</p>
-            <pre><code>./main</code></pre>
+<pre><code>./main</code></pre>
             <h3>Interacción</h3>
             <p>El programa desplegará un menú y pedirá al usuario que elija una opción para cifrar, enmascarar, tokenizar o truncar datos. Se deben seguir las instrucciones en pantalla para seleccionar la operación deseada y proporcionar los datos de entrada.</p>
-            <pre>
+<pre>
 ===================================
 |     Selecciona una opción       |
 ===================================
@@ -106,7 +112,7 @@
 | [5] Truncado                    |
 | [6] Salir                       |
 -----------------------------------
---> </pre>
+--></pre>
         </section>
         <section id="referencias">
             <h2>Referencias</h2>

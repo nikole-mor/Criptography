@@ -20,10 +20,15 @@ section {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: 0.2s;
 }
-
-
 section:hover {
   background-color: #fff;
+}
+
+.cpp-title {
+  color:rgb(67, 89, 255);
+}
+.py-title {
+  color:rgb(255, 220, 117);
 }
 
 .hljs-comment {
