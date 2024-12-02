@@ -1,0 +1,5 @@
+Datos de persona
+Juan Perez
+juanperez@gmail.com
+1234567890123456
+Transferencia
