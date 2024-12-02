@@ -1,4 +1,4 @@
-# Criptography
+# Cryptography
 Encryption C++
 
 Documentación
