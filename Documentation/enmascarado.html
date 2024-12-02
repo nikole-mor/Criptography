@@ -96,77 +96,86 @@
         <p>La tarjeta "1234567890123456" enmascarada con el carácter '*' se convierte en "************3456".</p>
 
         <h4>Enmascarar Nombre</h4>
-<pre><code>string Enmascarado::enmascararNombre(string dato, char mascara) {
-    string enmascarado = "";
-    for (int i = 0; i < dato.length(); i++) { // Recorre el string
-        if (i == 0 || dato[i] == ' ' ||
-            dato[i - 1] == ' ') { // Si es el primer carácter o es un espacio
-        enmascarado += dato[i]; // Agrega el carácter
-        } else {                  // De lo contrario, agrega la mascara
-        enmascarado += mascara;
+<pre><code><span class="hljs-data">string</span> <span class="hljs-class">Enmascarado</span>::<span class="hljs-function">enmascararNombre</span>(<span class="hljs-data">string</span> <span class="hljs-var">dato</span>, <span class="hljs-data">char</span> <span class="hljs-var">mascara</span>) {
+    <span class="hljs-data">string</span> <span class="hljs-var">enmascarado</span> = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-data">int</span> <span class="hljs-var">i</span> = <span class="hljs-number">0</span>; <span class="hljs-var">i</span> &lt; <span class="hljs-var">dato</span>.length(); <span class="hljs-var">i</span>++) { <span class="hljs-comment">// Recorre el string</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-var">i</span> == <span class="hljs-number">0</span> || <span class="hljs-var">dato</span>[<span class="hljs-var">i</span>] == <span class="hljs-string">' '</span> || <span class="hljs-var">dato</span>[<span class="hljs-var">i</span> - <span class="hljs-number">1</span>] == <span class="hljs-string">' '</span>) { 
+            <span class="hljs-comment">// Si es el primer carácter o es un espacio</span>
+            <span class="hljs-var">enmascarado</span> += <span class="hljs-var">dato</span>[<span class="hljs-var">i</span>]; <span class="hljs-comment">// Agrega el carácter</span>
+            } <span class="hljs-keyword">else</span> { 
+            <span class="hljs-comment">// De lo contrario, agrega la mascara</span>
+            <span class="hljs-var">enmascarado</span> += <span class="hljs-var">mascara</span>;
+            }
         }
-    }
-    return enmascarado;
-}</code></pre>
+    <span class="hljs-keyword">return</span> <span class="hljs-var">enmascarado</span>;
+}
+                </code></pre>
+
             <h4>Resultado</h4>
             <p>El nombre "Juan Perez" enmascarado con el carácter '*' se convierte en "Juan P****".</p>
 
             <h4>Enmascarar Correo</h4>
-<pre><code>string Enmascarado::enmascararCorreo(string dato, char mascara) {
-    string enmascarado = "";
-    for (int i = 0; i < dato.length(); i++) { // Recorrer el string
-        if (i == 0) {
-        enmascarado += dato[i]; // Si es el primer carácter, agregalo
-        } else if (dato[i] ==
-                    '@') { // Si es @, agrega todos los carácteres restantes
-        while (i < dato.length()) {
-            enmascarado += dato[i];
-            i++;
+<pre><code>
+<span class="hljs-data">string</span> <span class="hljs-class">Enmascarado</span>::<span class="hljs-function">enmascararCorreo</span>(<span class="hljs-data">string</span> <span class="hljs-var">dato</span>, <span class="hljs-data">char</span> <span class="hljs-var">mascara</span>) {
+<span class="hljs-data">string</span> <span class="hljs-var">enmascarado</span> = <span class="hljs-string">""</span>;
+<span class="hljs-keyword">for</span> (<span class="hljs-data">int</span> <span class="hljs-var">i</span> = <span class="hljs-number">0</span>; <span class="hljs-var">i</span> &lt; <span class="hljs-var">dato</span>.length(); <span class="hljs-var">i</span>++) { <span class="hljs-comment">// Recorrer el string</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-var">i</span> == <span class="hljs-number">0</span>) {
+            <span class="hljs-var">enmascarado</span> += <span class="hljs-var">dato</span>[<span class="hljs-var">i</span>]; <span class="hljs-comment">// Si es el primer carácter, agrégalo</span>
+        } <span class="hljs-keyword">else if</span> (<span class="hljs-var">dato</span>[<span class="hljs-var">i</span>] == <span class="hljs-string">'@'</span>) { 
+            <span class="hljs-comment">// Si es @, agrega todos los caracteres restantes</span>
+            <span class="hljs-keyword">while</span> (<span class="hljs-var">i</span> &lt; <span class="hljs-var">dato</span>.length()) {
+                <span class="hljs-var">enmascarado</span> += <span class="hljs-var">dato</span>[<span class="hljs-var">i</span>];
+                <span class="hljs-var">i</span>++;
         }
-        break;
-        } else {
-        enmascarado += mascara; // De lo contrario, agrega la mascara
+        <span class="hljs-keyword">break</span>;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-var">enmascarado</span> += <span class="hljs-var">mascara</span>; <span class="hljs-comment">// De lo contrario, agrega la máscara</span>
         }
     }
-    return enmascarado;
-}</code></pre>
+        <span class="hljs-keyword">return</span> <span class="hljs-var">enmascarado</span>;
+}
+</code></pre>
+                
             <h4>Resultado</h4>
             <p>El correo "juanperez@gmail.com" enmascarado con el carácter '*' se convierte en "j********@gmail.com".</p>
 
             <h4>Enmascarar Archivo</h4>
-<pre><code>void Enmascarado::enmascararArchivo(const string &inputFileName, const string &outputFileName, char mascara) {
-    ifstream inputFile(inputFileName);
-    ofstream outputFile(outputFileName);
+<pre><code>
+<span class="hljs-keyword">void</span> <span class="hljs-class">Enmascarado</span>::<span class="hljs-function">enmascararArchivo</span>(<span class="hljs-keyword">const</span> <span class="hljs-data">string</span> &<span class="hljs-var">inputFileName</span>, <span class="hljs-keyword">const</span> <span class="hljs-data">string</span> &<span class="hljs-var">outputFileName</span>, <span class="hljs-data">char</span> <span class="hljs-var">mascara</span>) {
+    <span class="hljs-data">ifstream</span> <span class="hljs-var">inputFile</span>(<span class="hljs-var">inputFileName</span>);
+    <span class="hljs-data">ofstream</span> <span class="hljs-var">outputFile</span>(<span class="hljs-var">outputFileName</span>);
 
-    if (!inputFile.is_open()) {
-        cerr << "Error abriendo el archivo de entrada: " << inputFileName << endl;
-        return;
+    <span class="hljs-keyword">if</span> (!<span class="hljs-var">inputFile</span>.is_open()) {
+        <span class="hljs-data">cerr</span> << <span class="hljs-string">"Error abriendo el archivo de entrada: "</span> << <span class="hljs-var">inputFileName</span> << <span class="hljs-data">endl</span>;
+        <span class="hljs-keyword">return</span>;
     }
-    if (!outputFile.is_open()) {
-        cerr << "Error abriendo el archivo de salida: " << outputFileName << endl;
-        return;
+    <span class="hljs-keyword">if</span> (!<span class="hljs-var">outputFile</span>.is_open()) {
+        <span class="hljs-data">cerr</span> << <span class="hljs-string">"Error abriendo el archivo de salida: "</span> << <span class="hljs-var">outputFileName</span> << <span class="hljs-data">endl</span>;
+        <span class="hljs-keyword">return</span>;
     }
-
-    string linea;
-    Utils util;
-    while (getline(inputFile, linea)) {
-        // Determinar el tipo de dato y enmascarar
-        string enmascarado;
-        if (util.esNumeroTarjeta(linea)) {
-            enmascarado = enmascararTarjeta(linea, mascara);
-        } else if (util.esCorreo(linea)) {
-            enmascarado = enmascararCorreo(linea, mascara);
-        } else if (util.esNombre(linea)) {
-            enmascarado = enmascararNombre(linea, mascara);
-        } else {
-            enmascarado = linea; // Si no se reconoce, dejar la línea tal cual
+                
+    <span class="hljs-data">string</span> <span class="hljs-var">linea</span>;
+    <span class="hljs-class">Utils</span> <span class="hljs-var">util</span>;
+    <span class="hljs-keyword">while</span> (<span class="hljs-function">getline</span>(<span class="hljs-var">inputFile</span>, <span class="hljs-var">linea</span>)) {
+        <span class="hljs-comment">// Determinar el tipo de dato y enmascarar</span>
+        <span class="hljs-data">string</span> <span class="hljs-var">enmascarado</span>;
+        <span class="hljs-keyword">if</span> (<span class="hljs-var">util</span>.<span class="hljs-function">esNumeroTarjeta</span>(<span class="hljs-var">linea</span>)) {
+            <span class="hljs-var">enmascarado</span> = <span class="hljs-function">enmascararTarjeta</span>(<span class="hljs-var">linea</span>, <span class="hljs-var">mascara</span>);
+        } <span class="hljs-keyword">else if</span> (<span class="hljs-var">util</span>.<span class="hljs-function">esCorreo</span>(<span class="hljs-var">linea</span>)) {
+            <span class="hljs-var">enmascarado</span> = <span class="hljs-function">enmascararCorreo</span>(<span class="hljs-var">linea</span>, <span class="hljs-var">mascara</span>);
+        } <span class="hljs-keyword">else if</span> (<span class="hljs-var">util</span>.<span class="hljs-function">esNombre</span>(<span class="hljs-var">linea</span>)) {
+            <span class="hljs-var">enmascarado</span> = <span class="hljs-function">enmascararNombre</span>(<span class="hljs-var">linea</span>, <span class="hljs-var">mascara</span>);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-var">enmascarado</span> = <span class="hljs-var">linea</span>; <span class="hljs-comment">// Si no se reconoce, dejar la línea tal cual</span>
         }
-        outputFile << enmascarado << endl; // Escribir la línea enmascarada en el archivo de salida
+        <span class="hljs-var">outputFile</span> << <span class="hljs-var">enmascarado</span> << <span class="hljs-data">endl</span>; <span class="hljs-comment">// Escribir la línea enmascarada en el archivo de salida</span>
     }
-    inputFile.close();
-    outputFile.close();
-    cout << "El contenido enmascarado se ha guardado en " << outputFileName << endl;
-}</code></pre>
+    <span class="hljs-var">inputFile</span>.close();
+    <span class="hljs-var">outputFile</span>.close();
+    <span class="hljs-data">cout</span> << <span class="hljs-string">"El contenido enmascarado se ha guardado en "</span> << <span class="hljs-var">outputFileName</span> << <span class="hljs-data">endl</span>;
+}
+</code></pre>
+        
             <h4>Resultado</h4>
 <pre>
 archivo.txt:
