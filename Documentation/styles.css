@@ -209,3 +209,30 @@ pre {
 pre:hover {
   background-color: #ededed;
 }
+
+/* Estilo para el botón de clase "inicio" */
+button.inicio {
+  background-color: #18324e;
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  font-size: 16px;
+  cursor: pointer; 
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  display: inline-block; 
+  margin-bottom: 20px;
+}
+
+/* Estilo para el enlace dentro del botón */
+button.inicio a {
+  text-decoration: none; /* Sin subrayado */
+  color: inherit;
+}
+
+/* Hover para el botón */
+button.inicio:hover {
+  background-color: #0056b3; 
+  transform: scale(1.05);
+}
